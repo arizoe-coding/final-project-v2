@@ -104,6 +104,7 @@ foreach ($objets as $objet) {
 
         <div class="text-center mt-4">
             <a href="index.php" class="btn btn-secondary"><i class="bi bi-person-plus"></i> Ajouter un membre</a>
+            <a href="ajout_objet.php" class="btn btn-secondary"><i class="bi bi-person-plus"></i> Ajouter un objet</a>
             <a href="login.php" class="btn btn-outline-primary ms-2"><i class="bi bi-box-arrow-in-right"></i> Se connecter</a>
         </div>
     </div>

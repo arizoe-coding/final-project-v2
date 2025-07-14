@@ -146,7 +146,7 @@
 
     function get_images_of_objects($id_objet) {
         $bdd = iconnect();
-        $query = "SELECT * FROM emp_image WHERE id_objet = $id_objet";
+        $query = "SELECT * FROM emp_images_objet WHERE id_objet = $id_objet";
         $result = mysqli_query($bdd, $query);
         $images = [];
         if ($result) {
@@ -157,9 +157,39 @@
         return $images;
     }
 
+    function get_default_images(){
+        $bdd = iconnect();
+        $query = "SELECT * FROM emp_images_objet WHERE nom_image = 'default' LIMIT 1";
+        $result = mysqli_query($bdd, $query);
+        if ($result) {
+            while ($row = mysqli_fetch_assoc($result)) {
+               return $row;
+            }
+        }
+        return null;
+    }
+
     function get_images_principale_of_objects($id_objet) {
        $images = get_images_of_objects($id_objet);
-       return $images ? $images[0] : null;
+       return $images ? $images[0] : get_default_images();
+    }
+
+    function ajout_objet($nom_objet, $id_categorie, $id_membre) {
+        $bdd = iconnect();
+        $query = "INSERT INTO emp_objet (nom_objet, id_categorie, id_membre) VALUES ('$nom_objet', $id_categorie, $id_membre)";
+        $result = mysqli_query($bdd, $query);
+        if ($result) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function ajout_image($id_objet, $nom_image) {
+        $bdd = iconnect();
+        $query = "INSERT INTO emp_images_objet (id_objet, nom_image) VALUES ($id_objet, '$nom_image')";
+        $result = mysqli_query($bdd, $query);
+        return $result;
     }
 
 ?>

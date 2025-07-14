@@ -4,7 +4,8 @@
         static $connect = null;
 
         if ($connect === null) {
-            $connect = mysqli_connect('172.60.0.11', 'ETU004109', 'j4zrRKgI', 'db_s2_ETU004109');
+            //$connect = mysqli_connect('172.60.0.11', 'ETU004109', 'j4zrRKgI', 'db_s2_ETU004109');
+            $connect = mysqli_connect('localhost', 'root', '', 'emprunt');
 
             if (!$connect) {
                 // Arrête le script et affiche une erreur si la connexion échoue
