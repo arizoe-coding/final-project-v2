@@ -1,0 +1,35 @@
+version 1 
+    Objectif :  
+        - Login et inscription
+        - Liste des objets (avec date de retour si emprunt en cours )
+        - Filtre par catégorie
+    
+    Etape : 
+        -Création de la base de données :
+            ✔ Création des tables nécessaires @done(25-07-14 09:58)
+        
+        -Page d'accueil :
+            -Page login et inscription :
+                -Fonction à voire :
+                    ✔ vérification si utilisateur existe déjà ou mot de passe incrorret - connexion @done(25-07-14 10:38)
+                    ✔ insertion dans la base de données - Inscription @done(25-07-14 10:38)
+                -Page à voire :
+                    ✔ Page de connexion @done(25-07-14 10:38)
+                    ✔ Traitement connexion @done(25-07-14 10:38)
+                    ✔ Page d'inscription @done(25-07-14 10:38)
+                    ✔ Traitement inscription @done(25-07-14 10:38)
+            -Affichage de la liste des objets :
+                -Fonction à voire :
+                    ✔ Récupération des objets depuis la base de données @done(25-07-14 10:54)
+                    ✔ Vérification si l'objet est emprunté ou non @done(25-07-14 10:54)
+                    ✔ Affichage des objets avec date de retour si emprunt en cours @done(25-07-14 10:54)
+                    ✔ Recuperation de l'information de l'emprunt si l'objet est emprunté @done(25-07-14 10:54)
+                -Page à voire :
+                    ✔ Page d'accueil avec liste des objets @done(25-07-14 10:54)
+            -Filtre par catégorie :
+                -Fonction à voire :
+                    - Récupération des catégories depuis la base de données
+                    - Filtrage des objets par catégorie sélectionnée
+                -Page à voire :
+                    - Page d'accueil avec options de filtrage par catégorie
+                    - Affichage des objets filtrés
