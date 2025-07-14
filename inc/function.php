@@ -191,5 +191,17 @@
         $result = mysqli_query($bdd, $query);
         return $result;
     }
+    function get_all_emprunt($id_object){
+        $bdd = iconnect();
+        $query = "SELECT * FROM emp_emprunt WHERE id_objet='$id_object' ";
+        $result = mysqli_query($bdd,$query);
+        while ($row=mysql_fetch_assoc($result)) {
+            return $row;
+
+        }      
+        return null;
+
+
+    }
 
 ?>
