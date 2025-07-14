@@ -159,19 +159,35 @@
 
     function get_default_images(){
         $bdd = iconnect();
-        $query = "SELECT * FROM emp_images_objet WHERE nom_image = 'default' LIMIT 1";
+        $query = "SELECT * FROM emp_images_objet WHERE nom_image = 'default.jpeg' LIMIT 1";
         $result = mysqli_query($bdd, $query);
         if ($result) {
             while ($row = mysqli_fetch_assoc($result)) {
-               return $row;
+            return $row;
             }
         }
         return null;
     }
 
+    function count_images_of_objects($id_object){
+        $bdd = iconnect();
+        $query = "SELECT * FROM emp_images_objet WHERE id_objet = '$id_object'";
+        $result = mysqli_query($bdd, $query);
+        $count = 0;
+        if ($result) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $count++;
+            }
+        }
+        return $count;
+    }
+
     function get_images_principale_of_objects($id_objet) {
        $images = get_images_of_objects($id_objet);
-       return $images ? $images[0] : get_default_images();
+       if(count_images_of_objects($id_objet) === 0){
+            return get_default_images();
+       }
+       return $images[0];
     }
 
     function ajout_objet($nom_objet, $id_categorie, $id_membre) {
@@ -195,13 +211,58 @@
         $bdd = iconnect();
         $query = "SELECT * FROM emp_emprunt WHERE id_objet='$id_object' ";
         $result = mysqli_query($bdd,$query);
-        while ($row=mysql_fetch_assoc($result)) {
-            return $row;
+        $valiny = [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            return $valiny[] = $row;
 
         }      
         return null;
+    }
 
+    function get_objet_by_id($id_objet) {
+        $bdd = iconnect();
+        $query = "SELECT o.*, c.nom_categorie, m.nom AS nom_proprietaire
+                FROM emp_objet o
+                JOIN emp_categorie_objet c ON o.id_categorie = c.id_categorie
+                JOIN emp_membre m ON o.id_membre = m.id_membre
+                WHERE o.id_objet = $id_objet
+                LIMIT 1";
+        $result = mysqli_query($bdd, $query);
+        return ($result && mysqli_num_rows($result) === 1) ? mysqli_fetch_assoc($result) : null;
+    }
 
+    function get_historique_emprunts_objet($id_objet) {
+        $bdd = iconnect();
+        $historiques = [];
+        $query = "SELECT e.*, m.nom AS nom_emprunteur
+                FROM emp_emprunt e
+                JOIN emp_membre m ON e.id_membre = m.id_membre
+                WHERE e.id_objet = $id_objet
+                ORDER BY e.date_emprunt DESC";
+        $result = mysqli_query($bdd, $query);
+        if ($result) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $historiques[] = $row;
+            }
+        }
+        return $historiques;
+    }
+
+    function supprimer_image($id_image) {
+        $bdd = iconnect();
+        // Récupérer le nom de l'image pour supprimer le fichier physique
+        $query = "SELECT nom_image FROM emp_images_objet WHERE id_image = $id_image LIMIT 1";
+        $result = mysqli_query($bdd, $query);
+        if ($result && $row = mysqli_fetch_assoc($result)) {
+            $nom_image = $row['nom_image'];
+            $file_path = "../uploads/" . $nom_image;
+            if (file_exists($file_path) && $nom_image !== 'default.jpg' && $nom_image !== 'default.jpeg') {
+                unlink($file_path);
+            }
+        }
+        // Supprimer de la base
+        $delete_query = "DELETE FROM emp_images_objet WHERE id_image = $id_image";
+        return mysqli_query($bdd, $delete_query);
     }
 
 ?>

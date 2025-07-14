@@ -49,21 +49,23 @@ foreach ($objets as $objet) {
         <h2 class="text-danger"><i class="bi bi-x-circle"></i> Objets empruntés</h2>
         <div class="table-responsive">
         <table class="table table-bordered table-striped align-middle">
-            <thead class="table-danger">
-                <tr>
-                    <th>Nom de l'objet</th>
-                    <th>Catégorie</th>
-                    <th>Propriétaire</th>
-                    <th>Emprunteur</th>
-                    <th>Date d'emprunt</th>
-                </tr>
-            </thead>
-            <tbody>
+            <tr>
+                <th>Image</th>
+                <th>Nom de l'objet</th>
+                <th>Catégorie</th>
+                <th>Propriétaire</th>
+                <th>Emprunteur</th>
+                <th>Date d'emprunt</th>
+            </tr>
             <?php if (count($empruntes) === 0) {?>
-                <tr><td colspan="5" class="text-center">Aucun objet emprunté actuellement.</td></tr>
+                <tr><td colspan="6" class="text-center">Aucun objet emprunté actuellement.</td></tr>
             <?php } else { ?>
-                <?php foreach ($empruntes as $objet) { ?>
-                    <tr>
+                <?php foreach ($empruntes as $objet) { 
+                    $img = get_images_principale_of_objects($objet['id_objet']);
+                    $img_src = $img ? '../uploads/' . htmlspecialchars($img['nom_image']) : '';
+                ?>
+                    <tr onclick="window.location.href='traitement_affichage_objet.php?id=<?= $objet['id_objet'] ?>'" style="cursor:pointer;">
+                        <td><img src="<?= $img_src ?>" alt="Image" style="width:60px; height:60px; object-fit:cover;"></td>
                         <td><?= htmlspecialchars($objet['nom_objet']) ?></td>
                         <td><?= htmlspecialchars($objet['nom_categorie']) ?></td>
                         <td><?= htmlspecialchars($objet['nom_proprietaire']) ?></td>
@@ -72,33 +74,33 @@ foreach ($objets as $objet) {
                     </tr>
                 <?php } ?>
             <?php } ?>
-            </tbody>
         </table>
         </div>
 
         <h2 class="text-success mt-4"><i class="bi bi-check-circle"></i> Objets disponibles</h2>
         <div class="table-responsive">
         <table class="table table-bordered table-striped align-middle">
-            <thead class="table-success">
-                <tr>
-                    <th>Nom de l'objet</th>
-                    <th>Catégorie</th>
-                    <th>Propriétaire</th>
-                </tr>
-            </thead>
-            <tbody>
+            <tr>
+                <th>Image</th>
+                <th>Nom de l'objet</th>
+                <th>Catégorie</th>
+                <th>Propriétaire</th>
+            </tr>
             <?php if (count($non_empruntes) === 0) { ?>
-                <tr><td colspan="3" class="text-center">Aucun objet disponible actuellement.</td></tr>
+                <tr><td colspan="4" class="text-center">Aucun objet disponible actuellement.</td></tr>
             <?php } else { ?>
-                <?php foreach ($non_empruntes as $objet) { ?>
-                    <tr>
+                <?php foreach ($non_empruntes as $objet) { 
+                    $img = get_images_principale_of_objects($objet['id_objet']);
+                    $img_src = $img ? '../uploads/' . htmlspecialchars($img['nom_image']) : '';
+                ?>
+                    <tr onclick="window.location.href='traitement_affichage_objet.php?id=<?= $objet['id_objet'] ?>'" style="cursor:pointer;">
+                        <td><img src="<?= $img_src ?>" alt="Image" style="width:60px; height:60px; object-fit:cover;"></td>
                         <td><?= htmlspecialchars($objet['nom_objet']) ?></td>
                         <td><?= htmlspecialchars($objet['nom_categorie']) ?></td>
                         <td><?= htmlspecialchars($objet['nom_proprietaire']) ?></td>
                     </tr>
                 <?php } ?>
             <?php } ?>
-            </tbody>
         </table>
         </div>
 

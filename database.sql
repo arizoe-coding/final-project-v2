@@ -120,3 +120,6 @@ INSERT INTO emp_emprunt (id_objet, id_membre, date_emprunt, date_retour) VALUES
 (35, 2, '2021-07-08', '2025-07-05'),
 (39, 1, '2022-07-09', '2025-07-12'),
 (40, 4, '2023-07-10', '2025-07-05');
+
+INSERT INTO emp_images_objet (id_objet, nom_image) VALUES
+(1, 'default.jpeg');
