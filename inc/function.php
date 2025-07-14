@@ -265,4 +265,27 @@
         return mysqli_query($bdd, $delete_query);
     }
 
+    function get_membre_by_id($id_user) {
+        $bdd = iconnect();
+        $query = "SELECT * FROM emp_membre WHERE id_membre = $id_user LIMIT 1";
+        $result = mysqli_query($bdd, $query);
+        return ($result && mysqli_num_rows($result) === 1) ? mysqli_fetch_assoc($result) : null;
+    }
+
+    function get_objets_by_membre($id_user) {
+        $bdd = iconnect();
+        $objets = [];
+        $query = "SELECT o.*, c.nom_categorie 
+                FROM emp_objet o
+                JOIN emp_categorie_objet c ON o.id_categorie = c.id_categorie
+                WHERE o.id_membre = $id_user";
+        $result = mysqli_query($bdd, $query);
+        if ($result) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $objets[] = $row;
+            }
+        }
+        return $objets;
+    }
+
 ?>
